@@ -39,7 +39,7 @@ flutter:
 
   # 🔥 ASSETS
   assets:
-    - assets/logo.png
+    - assets/Logo_app.png
 
   # Si luego agregas más imágenes:
   # - assets/images/
