@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Para el temporizador
-import 'package:mi_intesud_social/welcome_screen.dart'; // 👈 Importa la nueva Bienvenida (ajusta la ruta si es necesario)
-
+import 'package:mi_intesud_social/pages/welcome_screen.dart'; // Importa la nueva Bienvenida
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -147,7 +146,6 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                   const SizedBox(height: 16),
 
-                  // Texto de carga para no dejar vacío, profesional
                   const Text(
                     'Cargando tu experiencia social...',
                     style: TextStyle(

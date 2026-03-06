@@ -72,11 +72,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300], // Gris como en wireframe
+                        color: Colors.grey[300], 
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Image.asset(
-                        'assets/login.png', // Tu logo (fallback a texto si no carga)
+                        'assets/login.png',
                         width: 120,
                         height: 60,
                         fit: BoxFit.contain,

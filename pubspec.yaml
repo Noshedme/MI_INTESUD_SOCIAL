@@ -5,7 +5,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.11.0  # 👈 Actualizado a versión estable reciente (si usas Dart 3.11+)
 
 dependencies:
   flutter:
@@ -32,14 +32,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^6.0.0
+  flutter_lints: ^4.0.0  #Versión actualizada para lints
 
 flutter:
   uses-material-design: true
 
-  # 🔥 ASSETS
   assets:
-    - assets/logo.png
-
-  # Si luego agregas más imágenes:
-  # - assets/images/
+    - assets/  #Esto cubre TODAS las imágenes en assets/

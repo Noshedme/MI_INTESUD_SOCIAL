@@ -149,17 +149,13 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     const SizedBox(height: 40),
 
-                    // CUERPO: Logo con scale-in, matching wireframe (icono de red social)
+                    // CUERPO: Logo con scale-in, usando la imagen real en lugar del icono
                     ScaleTransition(
                       scale: scaleAnim,
                       child: CircleAvatar(
                         radius: 50,
                         backgroundColor: const Color(0x33467B79).withOpacity(0.2),
-                        child: const Icon(
-                          Icons.people_alt_outlined, // Icono como en wireframe (gente conectada)
-                          size: 60,
-                          color: Color(0xFF467B79),
-                        ),
+                        backgroundImage: const AssetImage('assets/login.png'), // 
                       ),
                     ),
                     const SizedBox(height: 24),
