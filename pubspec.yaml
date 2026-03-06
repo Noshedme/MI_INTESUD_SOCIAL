@@ -39,7 +39,13 @@ flutter:
 
   # 🔥 ASSETS
   assets:
-    - assets/logo.png
+    - assets/images/logo1.png
+    - assets/images/Buzosdeportivos.webp
+    - assets/images/gorraintesud.webp
+    - assets/images/mochilaintesud.webp
+    - assets/images/polera.jpg
+    - assets/images/tomatodo.jpg
+    - assets/images/computadora.webp
 
   # Si luego agregas más imágenes:
   # - assets/images/
