@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "404630032096",
+    "project_id": "miintesudsocial",
+    "storage_bucket": "miintesudsocial.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404630032096:android:dd78069fae6dde257bca85",
+        "android_client_info": {
+          "package_name": "com.example.mi_intesud_social"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDKdzGbBUWNbVMi0dkY5aDh5jvifYdpNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
