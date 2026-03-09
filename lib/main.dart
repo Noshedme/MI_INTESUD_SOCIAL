@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:mi_intesud_social/splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:mi_intesud_social/firebase_options.dart';
+import 'package:mi_intesud_social/pages/login_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MI INTESUD SOCIAL',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Arial',
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(),
+      home: const LoginPage(),
     );
   }
 }
