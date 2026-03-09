@@ -46,6 +46,11 @@ flutter:
     - assets/images/polera.jpg
     - assets/images/tomatodo.jpg
     - assets/images/computadora.webp
+    - assets/images/mariagonzales.webp
+    - assets/images/intesudoficial.webp
+    - assets/images/desarrollodesoftware.png
+    - assets/images/cuadernoinstitucional.webp
+    - assets/images/pasebusmensual.jpg
 
   # Si luego agregas más imágenes:
   # - assets/images/

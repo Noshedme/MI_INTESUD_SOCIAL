@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'store_page.dart'; // Asegúrate de que el nombre del archivo sea correcto
+import 'guest_store_page.dart'; // Importación actualizada
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class GuestHomePage extends StatefulWidget {
+  const GuestHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<GuestHomePage> createState() => _GuestHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _GuestHomePageState extends State<GuestHomePage> {
   // Índice para controlar la navegación inferior (0: Inicio, 1: Tienda)
   int _currentIndex = 0;
 
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     // Lista de pantallas disponibles
     final List<Widget> _pages = [
       _buildHomeContent(), // Contenido del Muro Social
-      const StorePage(),   // Contenido de la Tienda
+      const GuestStorePage(),   // Contenido de la Tienda (Nombre actualizado)
     ];
 
     return Scaffold(
@@ -199,6 +199,7 @@ class _HomePageState extends State<HomePage> {
       subtitle: "Carrera de Desarrollo de Software",
       content: "💻 Aprende las tecnologías más demandadas del mercado: React, Node.js, Python, y más. Nuestros laboratorios cuentan con equipamiento de última generación. ¡Ven a visitarnos!",
       image: "assets/images/computadora.webp",
+      avatarImage: "assets/images/desarrollodesoftware.png",
       isLocked: false,
     );
   }
@@ -208,6 +209,7 @@ class _HomePageState extends State<HomePage> {
       title: "María González",
       subtitle: "Estudiante de 4to Semestre",
       content: "Privado.",
+      avatarImage: "assets/images/mariagonzales.webp",
       isLocked: true,
     );
   }
@@ -270,7 +272,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _baseCard({required String title, required String subtitle, required String content, String? image, bool isLocked = false}) {
+  Widget _baseCard({required String title, required String subtitle, required String content, String? image, String? avatarImage, bool isLocked = false}) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -283,7 +285,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           Row(
             children: [
-              const CircleAvatar(backgroundColor: Color(0xFFE1E8E5), radius: 20),
+              CircleAvatar(
+                backgroundColor: const Color(0xFFE1E8E5), 
+                radius: 20,
+                backgroundImage: avatarImage != null ? AssetImage(avatarImage) : null,
+              ),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,7 +338,8 @@ class _HomePageState extends State<HomePage> {
     return _baseCard(
       title: "INTESUD Oficial", 
       subtitle: "Cuenta Institucional", 
-      content: "🎓 ¡MATRÍCULA ABIERTA 2026! Aprovecha nuestro 20% de descuento en todas las carreras. Forma parte de la mejor institución educativa del sur. ¡No te quedes sin tu cupo!"
+      content: "🎓 ¡MATRÍCULA ABIERTA 2026! Aprovecha nuestro 20% de descuento en todas las carreras. Forma parte de la mejor institución educativa del sur. ¡No te quedes sin tu cupo!",
+      avatarImage: "assets/images/intesudoficial.webp",
     );
   }
 
@@ -340,7 +347,6 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBottomNav() {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
-      // Cambia el índice para alternar entre Inicio y Tienda
       onTap: (index) {
         setState(() {
           _currentIndex = index;

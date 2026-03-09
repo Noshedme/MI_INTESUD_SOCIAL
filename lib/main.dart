@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart'; // Verifica que esta ruta sea correcta en tu proyecto
+import 'pages/guest_home_page.dart'; // Corregido: comilla de cierre añadida
 
 void main() {
   runApp(const MyApp());
@@ -16,15 +16,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Arial',
         primarySwatch: Colors.green,
-        useMaterial3: true, // Habilita el diseño moderno de Flutter
+        useMaterial3: true,
       ),
-      // Aquí aplicamos el simulador para que se vea como celular
-      home: const MobileSimulator(child: HomePage()),
+      // Actualizado: Ahora llama a GuestHomePage
+      home: const MobileSimulator(child: GuestHomePage()), 
     );
   }
 }
 
-// Este widget envuelve tu app en un marco de teléfono
+// El widget MobileSimulator se mantiene igual para simular el celular
 class MobileSimulator extends StatelessWidget {
   final Widget child;
   const MobileSimulator({super.key, required this.child});
@@ -32,17 +32,16 @@ class MobileSimulator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E), // Fondo oscuro profesional
+      backgroundColor: const Color(0xFF1E1E1E),
       body: Center(
         child: Container(
-          // Dimensiones estándar de un smartphone moderno
           width: 375, 
           height: 812,
           margin: const EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(45), // Bordes curvos del móvil
-            border: Border.all(color: Colors.black, width: 12), // El marco físico
+            borderRadius: BorderRadius.circular(45),
+            border: Border.all(color: Colors.black, width: 12),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.6),
@@ -53,12 +52,10 @@ class MobileSimulator extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // La pantalla de la aplicación
               ClipRRect(
                 borderRadius: BorderRadius.circular(33),
                 child: child,
               ),
-              // Detalle de la "Cámara/Notch" superior para realismo
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
