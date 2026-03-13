@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'guest_store_page.dart'; // Importación actualizada
+import 'guest_register_page.dart';
 
 class GuestHomePage extends StatefulWidget {
   const GuestHomePage({super.key});
@@ -57,6 +58,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
   }
 
   // 1. CABECERA (LOGO PANDA + REGISTRARSE)
+  // 1. CABECERA (LOGO PANDA + REGISTRARSE)
   Widget _buildGuestHeader() {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
@@ -82,8 +84,16 @@ class _GuestHomePageState extends State<GuestHomePage> {
               ),
             ],
           ),
+          
+          // ESTE ES EL BOTÓN QUE DEBES REEMPLAZAR
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Navegación hacia la pantalla de registro
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const GuestRegisterPage()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: const Color(0xFF1A5235),
@@ -214,6 +224,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
     );
   }
 
+  // Busca esta función al final de guest_home_page.dart
   Widget _buildRegisterCTA() {
     return Container(
       width: double.infinity,
@@ -243,7 +254,13 @@ class _GuestHomePageState extends State<GuestHomePage> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navegación agregada aquí también:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const GuestRegisterPage()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
