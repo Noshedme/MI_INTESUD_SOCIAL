@@ -1,12 +1,63 @@
 import 'package:flutter/material.dart';
 
-class EventosScreen extends StatelessWidget {
+// ==========================================
+// 1. EL "MOLDE" DE NUESTROS EVENTOS (Datos reales)
+// ==========================================
+class Evento {
+  String dia;
+  String mes;
+  String etiqueta;
+  int cantidadAsistentes; // Cambiado a número (int) para poder sumar y restar
+  String titulo;
+  String descripcion;
+  bool confirmado; // Para saber si el usuario ya le dio al botón
+
+  Evento({
+    required this.dia,
+    required this.mes,
+    required this.etiqueta,
+    required this.cantidadAsistentes,
+    required this.titulo,
+    required this.descripcion,
+    this.confirmado = false, // Por defecto nadie ha confirmado aún
+  });
+}
+
+// ==========================================
+// 2. TU PANTALLA AHORA TIENE MEMORIA (StatefulWidget)
+// ==========================================
+class EventosScreen extends StatefulWidget {
   const EventosScreen({super.key});
 
-  // 🎨 Colores exactos de tu diseño institucional
+  @override
+  State<EventosScreen> createState() => _EventosScreenState();
+}
+
+class _EventosScreenState extends State<EventosScreen> {
+  // 🎨 Colores institucionales
   final Color verdeOscuro = const Color(0xFF064B3B);
   final Color verdeClaro = const Color(0xFF268E65);
   final Color fondoGris = const Color(0xFFF4F6F5);
+
+  // 📝 NUESTRA BASE DE DATOS LOCAL (Lista de eventos iniciales)
+  List<Evento> misEventos = [
+    Evento(
+      dia: '20',
+      mes: 'OCTUBRE',
+      etiqueta: 'Académico',
+      cantidadAsistentes: 45, // Ahora es un número matemático
+      titulo: 'Examen Final - Bases de Datos',
+      descripcion: 'Examen: Bases de Datos Implementarán Teoría para el día 30 de Octubre',
+    ),
+    Evento(
+      dia: '20',
+      mes: 'OCTUBRE',
+      etiqueta: 'Taller',
+      cantidadAsistentes: 30, // Ahora es un número matemático
+      titulo: 'Seminario de Programación',
+      descripcion: 'Taller práctico sobre desarrollo web moderno con React y Node.js',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +68,13 @@ class EventosScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Aquí luego tus compañeros le pondrán la acción de volver
-          },
+          onPressed: () {},
         ),
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Eventos', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-            Text('4 próximos eventos', style: TextStyle(color: Colors.white70, fontSize: 12)),
+            const Text('Eventos', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            Text('${misEventos.length} próximos eventos', style: const TextStyle(color: Colors.white70, fontSize: 12)),
           ],
         ),
         actions: [
@@ -33,10 +82,7 @@ class EventosScreen extends StatelessWidget {
             icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
             onPressed: () {},
           ),
-          IconButton(
-            icon: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {},
-          ),
+          // 🚫 EL BOTÓN DE "+" FUE ELIMINADO DE AQUÍ
         ],
       ),
       body: SingleChildScrollView(
@@ -45,25 +91,12 @@ class EventosScreen extends StatelessWidget {
           children: [
             _crearTarjetaSuperior(),
             const SizedBox(height: 20),
-            // Aquí llamamos a nuestra plantilla para crear el primer evento
-            _crearTarjetaEvento(
-              dia: '20',
-              mes: 'OCTUBRE',
-              etiqueta: 'Académico',
-              asistentes: '45 asistentes',
-              titulo: 'Examen Final - Bases de Datos',
-              descripcion: 'Examen: Bases de Datos Implementarán Teoría para el día 30 de Octubre',
-            ),
-            const SizedBox(height: 16),
-            // Segundo evento
-            _crearTarjetaEvento(
-              dia: '20',
-              mes: 'OCTUBRE',
-              etiqueta: 'Taller',
-              asistentes: '30 asistentes',
-              titulo: 'Seminario de Programación',
-              descripcion: 'Taller práctico sobre desarrollo web moderno con React y Node.js',
-            ),
+            
+            // 🔄 MAGIA: Dibujamos las tarjetas automáticamente leyendo la lista
+            ...misEventos.map((evento) => Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: _crearTarjetaEvento(evento),
+            )),
           ],
         ),
       ),
@@ -71,10 +104,9 @@ class EventosScreen extends StatelessWidget {
   }
 
   // ==========================================
-  // 🧩 WIDGETS PERSONALIZADOS (TUS PIEZAS DE LEGO)
+  // 🧩 WIDGETS Y FUNCIONES DE LA PANTALLA
   // ==========================================
 
-  // 1. Tarjeta principal "Hoy es viernes"
   Widget _crearTarjetaSuperior() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -99,13 +131,13 @@ class EventosScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Hoy es viernes', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(height: 4),
-                Text('Tienes 4 eventos programados este mes', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                const Text('Hoy es viernes', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text('Tienes ${misEventos.length} eventos programados este mes', style: const TextStyle(color: Colors.white70, fontSize: 13)),
               ],
             ),
           ),
@@ -114,15 +146,8 @@ class EventosScreen extends StatelessWidget {
     );
   }
 
-  // 2. Plantilla para las tarjetas de cada evento
-  Widget _crearTarjetaEvento({
-    required String dia,
-    required String mes,
-    required String etiqueta,
-    required String asistentes,
-    required String titulo,
-    required String descripcion,
-  }) {
+  // La tarjeta ahora recibe un OBJETO Evento con datos reales
+  Widget _crearTarjetaEvento(Evento evento) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -131,94 +156,150 @@ class EventosScreen extends StatelessWidget {
           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
         ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // Para alinear arriba
-        children: [
-          // Franja verde lateral con la fecha
-          Container(
-            width: 70,
-            decoration: BoxDecoration(
-              color: verdeClaro,
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Centrar verticalmente
-              children: [
-                const SizedBox(height: 10), // Empujar un poco hacia abajo para centrar mejor
-                Text(dia, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                Text(mes, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 60), // Espacio extra para que la franja baje hasta los botones
-              ],
-            ),
-          ),
-          
-          // Contenido derecho de la tarjeta
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: 70,
+              decoration: BoxDecoration(
+                color: verdeClaro,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Fila de etiqueta y asistentes
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.teal.shade50,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(etiqueta, style: const TextStyle(color: Colors.teal, fontSize: 12, fontWeight: FontWeight.bold)),
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.person_outline, size: 14, color: Colors.grey),
-                          const SizedBox(width: 4),
-                          Text(asistentes, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                        ],
-                      ),
-                      const Icon(Icons.chevron_right, color: Colors.grey),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Título y descripción
-                  Text(titulo, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
-                  const SizedBox(height: 4),
-                  Text(descripcion, style: const TextStyle(fontSize: 13, color: Colors.black54)),
-                  const SizedBox(height: 16),
-                  
-                  // Botones inferiores
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: verdeClaro,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          ),
-                          onPressed: () {},
-                          child: const Text('Confirmar Asistencia', style: TextStyle(color: Colors.white, fontSize: 12)),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: verdeClaro),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        onPressed: () {},
-                        child: const Text('Detalles', style: TextStyle(color: Colors.black87, fontSize: 12)),
-                      ),
-                    ],
-                  ),
+                  Text(evento.dia, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(evento.mes, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.shade50,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(evento.etiqueta, style: const TextStyle(color: Colors.teal, fontSize: 12, fontWeight: FontWeight.bold)),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.person_outline, size: 14, color: Colors.grey),
+                            const SizedBox(width: 4),
+                            // Mostramos el número actualizado seguido de la palabra "asistentes"
+                            Text('${evento.cantidadAsistentes} asistentes', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(evento.titulo, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+                    const SizedBox(height: 4),
+                    Text(evento.descripcion, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, color: Colors.black54)),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              // Si está confirmado se pone rojo oscuro (para cancelar), si no, es verde
+                              backgroundColor: evento.confirmado ? Colors.red.shade400 : verdeClaro,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            // LÓGICA DE CONFIRMAR / CANCELAR ASISTENCIA
+                            onPressed: () {
+                              setState(() {
+                                if (evento.confirmado) {
+                                  // Si ya estaba confirmado, cancelamos y restamos 1
+                                  evento.confirmado = false;
+                                  evento.cantidadAsistentes--;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Asistencia cancelada ❌'), backgroundColor: Colors.red),
+                                  );
+                                } else {
+                                  // Si no estaba confirmado, confirmamos y sumamos 1
+                                  evento.confirmado = true;
+                                  evento.cantidadAsistentes++;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('¡Asistencia confirmada para ${evento.titulo}! ✅'), backgroundColor: verdeOscuro),
+                                  );
+                                }
+                              });
+                            },
+                            // El texto cambia dependiendo del estado
+                            child: Text(
+                              evento.confirmado ? 'Cancelar Asistencia' : 'Confirmar Asistencia', 
+                              style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: verdeClaro),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                          onPressed: () {
+                            _mostrarDetallesEvento(context, evento);
+                          },
+                          child: const Text('Detalles', style: TextStyle(color: Colors.black87, fontSize: 12)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  // ==========================================
+  // 🚀 FUNCIONES DE LOS BOTONES REALES
+  // ==========================================
+
+  // Muestra la ventana emergente con los detalles completos
+  void _mostrarDetallesEvento(BuildContext context, Evento evento) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(evento.titulo, style: TextStyle(color: verdeOscuro, fontWeight: FontWeight.bold)),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('📅 Fecha: ${evento.dia} de ${evento.mes}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('👥 Participantes: ${evento.cantidadAsistentes}'),
+                Text('🏷️ Tipo: ${evento.etiqueta}'),
+                const SizedBox(height: 15),
+                const Text('Descripción:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 5),
+                Text(evento.descripcion),
+              ],
+            ),
+          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cerrar', style: TextStyle(color: verdeClaro, fontWeight: FontWeight.bold)),
+            ),
+          ],
+        );
+      },
     );
   }
 }
