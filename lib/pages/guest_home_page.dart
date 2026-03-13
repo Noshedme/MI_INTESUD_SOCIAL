@@ -348,6 +348,9 @@ class _GuestHomePageState extends State<GuestHomePage> {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
       onTap: (index) {
+        // El perfil (índice 3) no redirige a nada
+        if (index == 3) return;
+
         setState(() {
           _currentIndex = index;
         });
@@ -355,11 +358,46 @@ class _GuestHomePageState extends State<GuestHomePage> {
       type: BottomNavigationBarType.fixed,
       selectedItemColor: const Color(0xFF1A5235),
       unselectedItemColor: Colors.grey,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Inicio"),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: "Tienda"),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: "Eventos"),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Perfil"),
+      items: [
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.home_filled), 
+          label: "Inicio"
+        ),
+        
+        // TIENDA CON OJO PEQUEÑO ARRIBA
+        BottomNavigationBarItem(
+          icon: Stack(
+            children: [
+              const Icon(Icons.shopping_bag_outlined),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Icon(Icons.remove_red_eye, size: 10, color: Colors.grey[700]),
+              ),
+            ],
+          ),
+          label: "Tienda",
+        ),
+
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today_outlined), 
+          label: "Eventos"
+        ),
+
+        // PERFIL CON CANDADO PEQUEÑO ARRIBA
+        BottomNavigationBarItem(
+          icon: Stack(
+            children: [
+              const Icon(Icons.person_outline),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Icon(Icons.lock, size: 10, color: Colors.red[900]),
+              ),
+            ],
+          ),
+          label: "Perfil",
+        ),
       ],
     );
   }

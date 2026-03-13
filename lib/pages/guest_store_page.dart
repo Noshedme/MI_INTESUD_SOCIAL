@@ -21,22 +21,21 @@ class _GuestStorePageState extends State<GuestStorePage> {
               _buildGuestInfoBanner(),
               const SizedBox(height: 20),
               GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                childAspectRatio: 0.62,
-                children: [
-                  _buildLockedProductItem("Polera Oficial INTESUD", "12.990", "assets/images/polera.jpg", "4.8 (45)"),
-                  _buildLockedProductItem("Tomatodo Térmico", "8.990", "assets/images/tomatodo.jpg", "4.9 (78)"),
-                  _buildLockedProductItem("Pase Bus Mensual", "25.000", "assets/images/pasebusmensual.jpg", "5.0 (120)"),
-                  _buildLockedProductItem("Mochila INTESUD", "19.990", "assets/images/mochilaintesud.webp", "4.7 (34)"),
-                  _buildLockedProductItem("Cuaderno Institucional", "2.990", "assets/images/cuadernoinstitucional.webp", "4.5 (89)"),
-                  _buildLockedProductItem("Buzo Deportivo", "24.990", "assets/images/Buzosdeportivos.webp", "4.6 (56)"),
-                ],
-              ),
-              const SizedBox(height: 20),
+  shrinkWrap: true,
+  physics: const NeverScrollableScrollPhysics(),
+  crossAxisCount: 2,
+  mainAxisSpacing: 15,
+  crossAxisSpacing: 15,
+  childAspectRatio: 0.62,
+  children: [
+    _buildLockedProductItem("Polera Oficial", "12.990", "assets/images/polera.jpg", "4.8", "45"),
+    _buildLockedProductItem("Tomatodo", "8.990", "assets/images/tomatodo.jpg", "4.9", "78"),
+    _buildLockedProductItem("Pase Bus", "25.000", "assets/images/pasebusmensual.jpg", "5.0", "120"),
+    _buildLockedProductItem("Mochila", "19.990", "assets/images/mochilaintesud.webp", "4.7", "34"),
+    _buildLockedProductItem("Cuaderno", "2.990", "assets/images/cuadernoinstitucional.webp", "4.5", "89"),
+    _buildLockedProductItem("Buzo Deportivo", "24.990", "assets/images/Buzosdeportivos.webp", "4.6", "56"),
+  ],
+),              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -128,21 +127,23 @@ class _GuestStorePageState extends State<GuestStorePage> {
   }
 
   // Widget para cada producto con el botón de "Bloqueado"
-  Widget _buildLockedProductItem(String name, String price, String img, String rating) {
+  // Función ajustada para que el botón bloqueado quede junto al precio
+  Widget _buildLockedProductItem(String name, String price, String img, String rating, String reviews) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Imagen del producto
           Expanded(
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
               child: Image.asset(img, fit: BoxFit.cover, width: double.infinity,
-                errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image, color: Colors.grey))),
+                errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image))),
             ),
           ),
           Padding(
@@ -150,21 +151,47 @@ class _GuestStorePageState extends State<GuestStorePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11), maxLines: 1, overflow: TextOverflow.ellipsis),
-                Text("\$$price", style: const TextStyle(color: Color(0xFF1A5235), fontWeight: FontWeight.bold, fontSize: 14)),
-                const SizedBox(height: 8),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(color: Colors.blueGrey.shade50, borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.lock, size: 12, color: Colors.blueGrey.shade400),
-                      const SizedBox(width: 4),
-                      const Text("Bloqueado", style: TextStyle(color: Colors.blueGrey, fontSize: 10, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
+                // Título del producto
+                Text(
+                  name,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF374151)),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const Text("Centro de Alumnos", style: TextStyle(color: Colors.grey, fontSize: 9)),
+                const SizedBox(height: 6),
+                // Rating y Estrellas
+                Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.orange, size: 12),
+                    const SizedBox(width: 4),
+                    Text(rating, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                    Text(" ($reviews)", style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                // FILA AJUSTADA: Precio y Botón Bloqueado en la misma línea
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("\$$price", 
+                      style: const TextStyle(color: Color(0xFF1A5235), fontWeight: FontWeight.bold, fontSize: 14)),
+                    // Botón Bloqueado pequeño estilo cápsula
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD1D9E0).withOpacity(0.5), 
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.lock, size: 10, color: Color(0xFF586069)),
+                          SizedBox(width: 4),
+                          Text("Bloqueado", style: TextStyle(color: Color(0xFF586069), fontSize: 9, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -173,7 +200,6 @@ class _GuestStorePageState extends State<GuestStorePage> {
       ),
     );
   }
-
   Widget _buildCategoryFilters() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
