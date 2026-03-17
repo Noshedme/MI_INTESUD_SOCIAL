@@ -1,5 +1,5 @@
 name: mi_intesud_social
-description: Red social institucional INTESUD
+description: "Aplicación social del Intesud."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -13,21 +13,6 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
-  # 🔥 Animaciones suaves y pro
-  animations: ^2.0.11
-
-  # 🔥 Google Fonts (opcional pero recomendado)
-  google_fonts: ^6.2.1
-
-  # 🔥 Utils responsive
-  flutter_screenutil: ^5.9.3
-
-  # (Preparado para Firebase futuro — puedes activarlo luego)
-  # firebase_core: ^3.6.0
-  # firebase_auth: ^5.3.1
-  # cloud_firestore: ^5.4.4
-  # firebase_storage: ^12.3.2
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -37,9 +22,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # 🔥 ASSETS
   assets:
-    - assets/Logo_app.png
-
-  # Si luego agregas más imágenes:
-  # - assets/images/
+    - assets/images/Logo_app.png
+    - assets/images/anuncio.jpg
